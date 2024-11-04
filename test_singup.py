@@ -55,3 +55,6 @@ class TestSignUp:
         response = requests.post(url=self.url, data=payload, headers={'Content-Type': 'application/json'})
         assert response.status_code == 400
         assert response.json().get('message') == 'Email address is already in use'
+
+
+
