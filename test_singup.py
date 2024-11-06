@@ -1,41 +1,36 @@
+
 from pytest import fixture
 import requests
 
-from models.create_user_model import CreateUser
-from models.user import User
+from api_clients.user_client.models.requests.create_user_model import CreateUser
+
 
 class TestSignUp:
 
     url = "https://thinking-tester-contact-list.herokuapp.com/users"
     url_login = 'https://thinking-tester-contact-list.herokuapp.com/users/login'
-    url_delete = "https://thinking-tester-contact-list.herokuapp.com/users/me"
+    url_profile = "https://thinking-tester-contact-list.herokuapp.com/users/me"
 
-    global user
+    @fixture(scope="class")
+    def create_and_login_fixture(self):
+        payload = CreateUser(firstName="E", lastName="G",email="garynychxxx@gmail.com", password="raketa123").model_dump_json()
+        requests.post(url=self.url, data=payload, headers={'Content-Type': 'application/json'})
+        response = requests.post(url=self.url_login, data=payload, headers={'Content-Type': 'application/json'})
+        assert response.status_code == 200
+
+        yield response.json().get('token')
 
 
     @fixture(scope="class")
     def delete_user_fixture(self):
-        yield
-        payload = User(email=user.email, password=user.password).model_dump_json()
-        response = requests.post(url=self.url_login, data=payload, headers={'Content-Type': 'application/json'})
-        token = response.json().get('token')
-        assert response.status_code == 200
+        user = CreateUser(firstName="Joe", lastName="Doe", email="joedoe33@gmail.com", password="joedoe123").model_dump_json()
+        yield user
+        response = requests.post(url=self.url_login, data= user, headers={'Content-Type': 'application/json'})
+        requests.delete(url= self.url_profile, headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {response.json().get("token")}'})
 
-    @fixture(scope="class")
-    def login_user_fixture(self):
-        yield
-        payload = User(email=user.email, password=user.password).model_dump_json()
-        response = requests.post(url=self.url_login, data=payload, headers={'Content-Type': 'application/json'})
-        token = response.json().get('token')
-        response = requests.delete(url=self.url_delete,headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {token}'})
-        assert response.status_code == 200
-
-
-    def test_create_user_with_valid_fields(self, login_user_fixture, delete_user_fixture):
-        payload = CreateUser(firstName="Joe", lastName="Doe", email="joedoe@gmail.com", password="joedoe123")
-        global user
-        user = payload
-        response = requests.post(url= self.url, data=payload.model_dump_json(), headers={'Content-Type': 'application/json'})
+    def test_create_user_with_valid_fields(self, delete_user_fixture):
+        payload = delete_user_fixture
+        response = requests.post(url= self.url, data=payload, headers={'Content-Type': 'application/json'})
         assert response.status_code == 201
 
     def test_create_user_with_incorrect_email_field(self):
@@ -56,5 +51,13 @@ class TestSignUp:
         assert response.status_code == 400
         assert response.json().get('message') == 'Email address is already in use'
 
+    def test_cannot_delete_user_without_login(self):
+        response = requests.delete(url= self.url_profile, headers={'Content-Type': 'application/json'})
+        assert response.status_code == 401
+
+    def test_delete_user(self, create_and_login_fixture):
+        token = create_and_login_fixture
+        response = requests.delete(url= self.url_profile, headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {token}'})
+        assert response.status_code == 200
 
 
