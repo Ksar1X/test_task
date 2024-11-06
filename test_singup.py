@@ -2,6 +2,7 @@
 from pytest import fixture
 import requests
 
+from api_clients.user_client import user_client
 from api_clients.user_client.models.requests.create_user_model import CreateUser
 
 
@@ -57,7 +58,7 @@ class TestSignUp:
 
     def test_delete_user(self, create_and_login_fixture):
         token = create_and_login_fixture
-        response = requests.delete(url= self.url_profile, headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {token}'})
+        response = user_client.delete_user(token=token)
         assert response.status_code == 200
 
 
