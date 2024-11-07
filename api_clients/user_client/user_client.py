@@ -33,7 +33,7 @@ def logout_user(user: User, token: str):
 def update_user(user: User, token: str):
     return requests.patch(url=profile_url, data=user.model_dump_json(), headers=default_headers)
 
-def delete_user(token: str):
+def delete_user(user: User, token: str):
     headers = default_headers
     headers.pop('Authorization', f'Bearer {token}')
-    return requests.delete(url=profile_url, headers=headers)
+    return requests.delete(url=profile_url, data=user.model_dump_json(), headers=headers)
