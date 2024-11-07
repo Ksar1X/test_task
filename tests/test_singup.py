@@ -57,7 +57,7 @@ class TestSignUp:
         assert response.status_code == 401
 
     def test_delete_user(self, create_and_login_fixture):
-        token = create_and_login_fixture
+         = create_and_login_fixture
         response = user_client.delete_user(token=token)
         assert response.status_code == 200
 

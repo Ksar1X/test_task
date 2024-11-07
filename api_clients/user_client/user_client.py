@@ -22,20 +22,18 @@ def get_user_profile(user_id: str, token: str):
     headers.pop('Authorization', f'Bearer {token}')
     return requests.get(url=profile_url + f"/{user_id}", headers=headers)
 
-def login_user(user: User, token: str):
-    headers = default_headers
-    headers.pop('Authorization', f'Bearer {token}')
+def login_user(user: User):
     return requests.post(url=login_url, data=user.model_dump_json(), headers=default_headers)
 
 def logout_user(user: User, token: str):
     headers = default_headers
     headers.pop('Authorization', f'Bearer {token}')
-    return requests.post(url=logout_url, data=user.model_dump_json(), headers=default_headers)
+    return requests.post(url=logout_url, data=user.model_dump_json(), headers=headers)
 
 def update_user(user: User, token: str):
     return requests.patch(url=profile_url, data=user.model_dump_json(), headers=default_headers)
 
-def delete_user(token: str):
+def delete_user(user: User, token: str):
     headers = default_headers
     headers.pop('Authorization', f'Bearer {token}')
-    return requests.delete(url=profile_url, headers=headers)
+    return requests.delete(url=profile_url, data=user.model_dump_json(), headers=headers)
