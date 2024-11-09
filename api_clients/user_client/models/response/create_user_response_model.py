@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
-from api_clients.user_client.models.requests.create_user_model import CreateUser
+from api_clients.user_client.models.response.added_user import AddedUser
 
 
 class CreateUserResponse(BaseModel):
-    user: CreateUser
+    user: AddedUser
     token: str
