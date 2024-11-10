@@ -1,7 +1,7 @@
 import requests
 from _pytest.fixtures import fixture
 
-from api_clients.contacts_client.models.requests.create_contact_model import CreateContact
+from models.create_contact_model import CreateContact
 from api_clients.user_client.models.requests.user import User
 
 class TestAddContact:
@@ -9,8 +9,6 @@ class TestAddContact:
     url_login = 'https://thinking-tester-contact-list.herokuapp.com/users/login'
     url_profile = "https://thinking-tester-contact-list.herokuapp.com/users/me"
     url_contacts = "https://thinking-tester-contact-list.herokuapp.com/contacts"
-
-
 
     @fixture(scope='class')
     def user_get_token_fixture(self):
@@ -78,6 +76,4 @@ class TestAddContact:
 
         assert response.status_code == 200
         assert response.text == 'Contact deleted'
-
-    def
 
