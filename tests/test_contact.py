@@ -1,12 +1,14 @@
 from _pytest.fixtures import fixture
 
-from api_clients.contact_client.contact_client import add_contact, delete_contact, get_contact, get_contact_list
-from api_clients.contact_client.models.create_contact_model import CreateContact
+from api_clients.contact_client.contact_client import add_contact, delete_contact, get_contact, get_contact_list, \
+    update_contact, put_contact
+from api_clients.contact_client.models.requests.create_contact_model import CreateContact
+from api_clients.contact_client.models.requests.patch_contact import PatchContactModel
 from api_clients.user_client.models.requests.user import User
 from api_clients.user_client.user_client import login_user
 
 
-class TestAddContact:
+class TestContact:
 
     @fixture(scope='class')
     def user_get_token_fixture(self):
@@ -26,7 +28,7 @@ class TestAddContact:
                                 city="fake", stateProvince="KS", postalCode="12345", country="FAKE")
         response = add_contact(payload, token)
         indicator = response.json().get('_id')
-        yield indicator
+        yield indicator, token
 
 
     def test_cannot_create_contact_without_login(self):
@@ -58,27 +60,47 @@ class TestAddContact:
                                 phone="503645570", street1="fake", street2="fake",
                                 city="fake", stateProvince="KS", postalCode="12345", country="FAKE")
         response = add_contact(payload, token)
-
         assert response.status_code == 201
 
-    def test_delete_contact(self, user_get_token_fixture, create_contact):
-        token = user_get_token_fixture
-        indicator = create_contact
-        response = delete_contact(token, indicator)
-
-        assert response.status_code == 200
-        assert response.text == 'Contact deleted'
-
-    def test_get_contact(self, user_get_token_fixture, create_contact):
-        token = user_get_token_fixture
-        indicator = create_contact
+    def test_get_contact(self, create_contact):
+        indicator, token = create_contact
         response = get_contact(indicator, token)
+        print(response)
         assert response.status_code == 200
 
     def test_get_contact_list(self, user_get_token_fixture):
         token = user_get_token_fixture
         response = get_contact_list(token)
         assert response.status_code == 200
+
+    def test_change_contact_fields(self, create_contact):
+        indicator, token = create_contact
+        payload = CreateContact(firstName="Joe13", lastName="Doe2", birthdate="1999-10-10",
+                                email="joedoe1231241341341@fakemail.com",
+                                phone="503645530", street1="1fake", street2="fake",
+                                city="fake", stateProvince="KS", postalCode="12345", country="FAKE")
+        response = put_contact(indicator, token, payload)
+        assert response.status_code == 200
+        response = get_contact(indicator, token)
+        assert response.status_code == 200
+        assert CreateContact(**response.json()) == payload
+
+    def test_change_contact_field(self, create_contact):
+        indicator, token = create_contact
+        field_to_update = '{\"firstName\":\"asdasdasd\"}'
+        response = update_contact(indicator, token, field_to_update)
+        assert response.status_code == 200
+        response = get_contact(indicator, token)
+        assert response.status_code == 200
+        assert response.json().get('firstName') == "asdasdasd"
+
+    def test_delete_contact(self, create_contact):
+        indicator, token = create_contact
+        response = delete_contact(indicator, token)
+        print(response)
+        assert response.status_code == 200
+        assert response.text == 'Contact deleted'
+
 
 
 

@@ -25,7 +25,7 @@ class TestLogIn:
 
     def test_cannot_logout_without_login(self):
         payload = User(email="garynychxxx@gmail.com", password="raketa1234")
-        response = user_client.logout_user(payload, None)
+        response = user_client.logout_user(payload, '')
         assert response.status_code == 401
 
     def test_logout_user(self):
@@ -36,7 +36,7 @@ class TestLogIn:
 
     def test_user_cannot_logout_without_login(self):
         profile = User(email="garynychxxx@gmail.com", password="raketa123")
-        response = logout_user(profile, None)
+        response = logout_user(profile, '')
         assert response.status_code == 401
 
 

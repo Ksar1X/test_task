@@ -1,6 +1,8 @@
 from http.client import responses
 
 from pytest import fixture
+
+from GenerationUser.generate_unregistered_user import GenerateUser
 from api_clients.user_client.user_client import *
 
 class TestSignUp:
@@ -51,7 +53,7 @@ class TestSignUp:
     def test_cannot_delete_user_without_login(self):
         user = GenerateUser().generate()
         profile = User(email=user.email, password=user.password)
-        response = delete_user(profile, None)
+        response = delete_user(profile, "")
         assert response.status_code == 401
 
     def test_delete_user(self, create_user):
