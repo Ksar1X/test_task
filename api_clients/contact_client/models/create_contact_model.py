@@ -12,4 +12,3 @@ class CreateContact(BaseModel):
     stateProvince: str
     postalCode: str
     country: str
-    owner: str
