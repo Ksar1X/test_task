@@ -4,6 +4,7 @@ from api_clients.api_clients_base import ApiClientBase
 from api_clients.user_client.models.requests.create_user_model import CreateUser
 from api_clients.user_client.models.requests.user import User
 
+
 class UserClient(ApiClientBase):
 
     base_url = 'https://thinking-tester-contact-list.herokuapp.com'
@@ -17,8 +18,8 @@ class UserClient(ApiClientBase):
 
     default_headers = {'Content-Type':'application/json'}
 
-    def add_user(self, super, user: CreateUser):
-        return  super.POST (postfix_url=self.users_url, data=user)
+    def add_user(self, user: CreateUser):
+        return  ApiClientBase.post_req(postfix_url=self.users_url, data=user)
 
     def get_user_profile(user_id: str, token: str):
         headers = dict()

@@ -1,19 +1,35 @@
+import logging
 import requests
 from pydantic import BaseModel
 
-from api_clients.contact_client.contact_client import base_url, headers
 
+default_headers = {'Content-Type': 'application/json'}
+baseUrl = "https://thinking-tester-contact-list.herokuapp.com"
+token_header = dict()
 
 class ApiClientBase:
-    default_headers = {'Content-Type': 'application/json'}
 
-    baseUrl = "https://thinking-tester-contact-list.herokuapp.com/"
-    def POST(self, postfix_url:str, headers:dict, token:str, data: BaseModel):
+    @staticmethod
+    def post_req(data: BaseModel, postfix_url = "", token=None):
+        res = requests.post(url=baseUrl + postfix_url, headers= default_headers | token, data= data.model_dump_json())
+        print(res)
+        return res
 
-        requests.post(url=base_url + postfix_url, headers=headers | self.default_headers | "TOKEN", data= data.model_dump_json() )
+    @staticmethod
+    def get_req(postfix_url = "", token = None):
+        res = requests.get(url=baseUrl + postfix_url, headers=default_headers | token)
+        print(res)
+        return res
 
-    def GET(self, postfix_url: str, headers: dict, token: str, data: BaseModel):
-        requests.post(url=base_url + postfix_url, headers=headers | self.default_headers | "TOKEN")
+    @staticmethod
+    def put_req(data: BaseModel, postfix_url = "", token = None):
+        return requests.put(url=baseUrl + postfix_url, headers=default_headers | token, data= data.model_dump_json())
 
-    def PUT(self, postfix_url: str, headers: dict, token: str, data: BaseModel):
-        requests.post(url=base_url + postfix_url, headers=headers | self.default_headers | "TOKEN")
+    @staticmethod
+    def patch_req(data: BaseModel, postfix_url = "", token = None):
+        return requests.patch(url=baseUrl + postfix_url, headers=default_headers | token, data= data.model_dump_json())
+
+    @staticmethod
+    def delete_req(postfix_url = "", token = None):
+        res = requests.delete(url=baseUrl + postfix_url, headers=default_headers | token)
+        return res
