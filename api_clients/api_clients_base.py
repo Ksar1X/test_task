@@ -1,4 +1,4 @@
-import logging
+
 import requests
 from pydantic import BaseModel
 
@@ -11,15 +11,11 @@ class ApiClientBase:
 
     @staticmethod
     def post_req(data: BaseModel, postfix_url = "", token=None):
-        res = requests.post(url=baseUrl + postfix_url, headers= default_headers | token, data= data.model_dump_json())
-        print(res)
-        return res
+        return requests.post(url=baseUrl + postfix_url, headers= default_headers | token, data= data.model_dump_json())
 
     @staticmethod
     def get_req(postfix_url = "", token = None):
-        res = requests.get(url=baseUrl + postfix_url, headers=default_headers | token)
-        print(res)
-        return res
+        return requests.get(url=baseUrl + postfix_url, headers=default_headers | token)
 
     @staticmethod
     def put_req(data: BaseModel, postfix_url = "", token = None):
@@ -31,5 +27,4 @@ class ApiClientBase:
 
     @staticmethod
     def delete_req(postfix_url = "", token = None):
-        res = requests.delete(url=baseUrl + postfix_url, headers=default_headers | token)
-        return res
+        return requests.delete(url=baseUrl + postfix_url, headers=default_headers | token)

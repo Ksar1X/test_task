@@ -1,12 +1,10 @@
-from faker import *
-
+from faker import Faker
 from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 
 
 class ContactGenerator:
-
     @staticmethod
-    def generate(self):
+    def generate():
         faker = Faker()
         contact = CreateContact(firstName=faker.first_name(),
                                 lastName=faker.last_name(),
