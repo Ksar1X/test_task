@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class CreateContact(BaseModel):
+class ContactModel(BaseModel):
     firstName: str
     lastName: str
     birthdate: str
@@ -12,4 +12,3 @@ class CreateContact(BaseModel):
     stateProvince: str
     postalCode: str
     country: str
-    owner: str
