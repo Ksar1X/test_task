@@ -4,7 +4,6 @@ from api_clients.api_clients_base import ApiClientBase
 from api_clients.user_client.models.requests.create_user_model import CreateUser
 from api_clients.user_client.models.requests.user import User
 
-headers = dict()
 
 class UserClient(ApiClientBase):
 
@@ -13,28 +12,23 @@ class UserClient(ApiClientBase):
     users_url = '/users'             ## addUser      POST
     logout_url = '/users/logout'     ## logout POST
 
-    default_headers = {'Content-Type':'application/json'}
-
+    api = ApiClientBase()
 
     def add_user(self, user: CreateUser):
-        return ApiClientBase.post_req(postfix_url=self.users_url, data=user.model_dump_json())
+        return self.api.post_req(postfix_url=self.users_url, data=user)
 
     def get_user_profile(self, token: str):
-        headers['Authorization'] = f'Bearer {token}'
-        return ApiClientBase.get_req(postfix_url=self.profile_url, token=headers)
+        return self.api.get_req(postfix_url=self.profile_url, token=token)
 
     def login_user(self, user: User):
-        return ApiClientBase.post_req(data=user.model_dump_json(), postfix_url=self.login_url)
+        return self.api.post_req(data=user, postfix_url=self.login_url)
 
     def logout_user(self, user: User, token: str):
-        headers['Authorization'] = f'Bearer {token}'
-        return ApiClientBase.post_req(data=user.model_dump_json(), postfix_url=self.logout_url, token=headers)
+        return self.api.post_req(data=user, postfix_url=self.logout_url, token=token)
 
     def update_user(self, user: User, token: str):
-        headers['Authorization'] = f'Bearer {token}'
-        return ApiClientBase.patch_req(data=user.model_dump_json(), postfix_url=self.profile_url, token=headers)
+        return self.api.patch_req(data=user, postfix_url=self.profile_url, token=token)
 
     def delete_user(self, user:User, token: str):
-        headers['Authorization'] = f'Bearer {token}'
-        return ApiClientBase.post_req(data=user.model_dump_json(), postfix_url=self.profile_url, token=headers)
+        return self.api.post_req(data=user, postfix_url=self.profile_url, token=token)
 
