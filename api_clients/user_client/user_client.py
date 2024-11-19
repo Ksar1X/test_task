@@ -17,24 +17,24 @@ class UserClient(ApiClientBase):
 
 
     def add_user(self, user: CreateUser):
-        return ApiClientBase.post_req(postfix_url=self.users_url, data=user)
+        return ApiClientBase.post_req(postfix_url=self.users_url, data=user.model_dump_json())
 
     def get_user_profile(self, token: str):
         headers['Authorization'] = f'Bearer {token}'
         return ApiClientBase.get_req(postfix_url=self.profile_url, token=headers)
 
     def login_user(self, user: User):
-        return ApiClientBase.post_req(data=user, postfix_url=self.login_url)
+        return ApiClientBase.post_req(data=user.model_dump_json(), postfix_url=self.login_url)
 
     def logout_user(self, user: User, token: str):
         headers['Authorization'] = f'Bearer {token}'
-        return ApiClientBase.post_req(data=user, postfix_url=self.logout_url, token=headers)
+        return ApiClientBase.post_req(data=user.model_dump_json(), postfix_url=self.logout_url, token=headers)
 
     def update_user(self, user: User, token: str):
         headers['Authorization'] = f'Bearer {token}'
-        return ApiClientBase.patch_req(data=user, postfix_url=self.profile_url, token=headers)
+        return ApiClientBase.patch_req(data=user.model_dump_json(), postfix_url=self.profile_url, token=headers)
 
     def delete_user(self, user:User, token: str):
         headers['Authorization'] = f'Bearer {token}'
-        return ApiClientBase.post_req(data=user, postfix_url=self.profile_url, token=headers)
+        return ApiClientBase.post_req(data=user.model_dump_json(), postfix_url=self.profile_url, token=headers)
 

@@ -1,5 +1,5 @@
 from pytest import fixture
-from Generation.generate_unregistered_user import GenerateUser
+from Generate.generate_unregistered_user import GenerateUser
 from api_clients.user_client.user_client import *
 from api_clients.api_clients_base import ApiClientBase
 
