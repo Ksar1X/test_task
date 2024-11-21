@@ -1,35 +1,28 @@
 import requests
+from api_clients.api_clients_base import ApiClientBase
+from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 from pydantic import BaseModel
 
-from api_clients.contact_client.models.requests.contact_model import ContactModel
-from api_clients.contact_client.models.requests.create_contact_model import CreateContact
-from api_clients.contact_client.models.response.create_contact_response_model import CreateContactResponse
 
-base_url = 'https://thinking-tester-contact-list.herokuapp.com/contacts/' ## + id GET/PUT/PATCH/DELETE
+class ContactClient(ApiClientBase):
 
-default_headers = {'Content-Type':'application/json'}
-headers = dict()
+    contact_url = '/contacts'
+    api = ApiClientBase()
 
-def add_contact(contact: CreateContact, token: str):
-    headers['Authorization'] = f'Bearer {token}'
-    return requests.post(base_url, data=contact.model_dump_json(), headers=headers | default_headers)
+    def add_contact(self, contact: CreateContact, token: str):
+        return self.api.post_req(data=contact, postfix_url=self.contact_url, token=token)
 
-def get_contact_list(token: str):
-    headers['Authorization'] = f'Bearer {token}'
-    return requests.get(base_url, headers=headers | default_headers)
+    def get_contact_list(self, token: str):
+        return self.api.get_req(postfix_url=self.contact_url, token=token)
 
-def get_contact(contact_id:str, token:str):
-    headers['Authorization'] = f'Bearer {token}'
-    return requests.get(base_url + contact_id, headers=headers)
+    def get_contact(self, contact_id:str, token: str):
+        return self.api.get_req(postfix_url=self.contact_url + '/' + contact_id, token=token)
 
-def put_contact(contact_id:str, token:str, data: CreateContact):
-    headers['Authorization'] = f'Bearer {token}'
-    return requests.put(base_url + contact_id, headers=headers | default_headers, data=data.model_dump_json())
+    def put_contact(self, contact_id:str, token: str, data: CreateContact):
+        return self.api.put_req(data=data, postfix_url=self.contact_url + '/' + contact_id, token=token)
 
-def update_contact(contact_id:str, token:str, data: str):
-    headers['Authorization'] = f'Bearer {token}'
-    return requests.patch(base_url + contact_id, data=data, headers=headers | default_headers)
+    def update_contact(self, contact_id:str, token: str, data: str):
+        return self.api.patch_req(data=data, postfix_url=self.contact_url + '/' + contact_id, token=token)
 
-def delete_contact(contact_id:str, token:str):
-    headers['Authorization'] = f'Bearer {token}'
-    return requests.delete(base_url + contact_id, headers=headers)
+    def delete_contact(self, contact_id:str, token: str):
+        return self.api.delete_req(postfix_url=self.contact_url + '/' + contact_id, token=token)

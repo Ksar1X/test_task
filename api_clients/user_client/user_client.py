@@ -7,40 +7,28 @@ from api_clients.user_client.models.requests.user import User
 
 class UserClient(ApiClientBase):
 
-    base_url = 'https://thinking-tester-contact-list.herokuapp.com'
-
-
-
-    login_url = base_url + '/users/login'       ## login POST
-    profile_url = base_url + '/users/me'        ## getUser, deleteUser, updateUser GET/ DELETE/ PATCH
+    login_url = '/users/login'       ## login POST
+    profile_url = '/users/me'        ## getUser, deleteUser, updateUser GET/ DELETE/ PATCH
     users_url = '/users'             ## addUser      POST
-    logout_url = base_url + '/users/logout'     ## logout POST
+    logout_url = '/users/logout'     ## logout POST
 
-    default_headers = {'Content-Type':'application/json'}
+    api = ApiClientBase()
 
     def add_user(self, user: CreateUser):
-        return  ApiClientBase.post_req(postfix_url=self.users_url, data=user)
+        return self.api.post_req(postfix_url=self.users_url, data=user)
 
-    def get_user_profile(user_id: str, token: str):
-        headers = dict()
-        headers['Authorization'] = f'Bearer {token}'
-        return requests.get(url=profile_url + f"/{user_id}", headers=headers | default_headers)
+    def get_user_profile(self, token: str):
+        return self.api.get_req(postfix_url=self.profile_url, token=token)
 
-    def login_user(user: User):
-        return requests.post(url=login_url, data=user.model_dump_json(), headers=default_headers)
+    def login_user(self, user: User):
+        return self.api.post_req(data=user, postfix_url=self.login_url)
 
-    def logout_user(user: User, token: str):
-        headers = dict()
-        headers['Authorization'] = f'Bearer {token}'
-        return requests.post(url=logout_url, data=user.model_dump_json(), headers=headers | default_headers)
+    def logout_user(self, user: User, token: str):
+        return self.api.post_req(data=user, postfix_url=self.logout_url, token=token)
 
-    def update_user(user: User, token: str):
-        headers = dict()
-        headers['Authorization'] = f'Bearer {token}'
-        return requests.patch(url=profile_url, data=user.model_dump_json(), headers=headers | default_headers)
+    def update_user(self, user: User, token: str):
+        return self.api.patch_req(data=user, postfix_url=self.profile_url, token=token)
 
-    def delete_user(user:User, token: str):
-        headers=dict()
-        headers['Authorization'] = f'Bearer {token}'
-        return requests.delete(url=profile_url, data=user.model_dump_json(), headers=headers | default_headers)
+    def delete_user(self, token: str):
+        return self.api.delete_req(postfix_url=self.profile_url, token=token)
 
