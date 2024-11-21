@@ -1,3 +1,4 @@
+from faker import Faker
 from pytest import fixture
 from Generate.generate_unregistered_user import GenerateUser
 from api_clients.user_client.user_client import *
@@ -18,16 +19,16 @@ class TestSignUp:
         yield user
 
     @fixture(scope="class")
-    def delete_user_fixture(self):
-        user = GenerateUser.generate()
+    def delete_user_fixture(self, create_user_fixture):
+        user = create_user_fixture
         yield user
         user = User(email=user.email, password=user.password)
         response = self.user_client.login_user(user=user)
-        response = self.user_client.delete_user(user=user, token=response.json().get('token'))
+        response = self.user_client.delete_user(token=response.json().get('token'))
         assert response.status_code == 200
 
-    def test_create_user_with_valid_fields(self, delete_user_fixture):
-        user = delete_user_fixture
+    def test_create_user_with_valid_fields(self):
+        user = self.random_user.generate()
         response = self.user_client.add_user(user=user)
         assert response.status_code == 201
 
@@ -55,29 +56,31 @@ class TestSignUp:
         assert response.json().get('message') == 'Email address is already in use'
 
 
-    def test_cannot_delete_user_without_login(self, create_user_fixture):
-        user = create_user_fixture
-        user = User(email=user.email, password=user.password)
-        response = self.user_client.delete_user(user=user, token='')
+    def test_cannot_delete_user_without_login(self, delete_user_fixture):
+        user = delete_user_fixture
+        response = self.user_client.delete_user(token='')
+        print(response)
         assert response.status_code == 401
 
     def test_delete_user(self, create_user_fixture):
         user = create_user_fixture
-        response = self.user_client.add_user(user=user)
-        res = self.user_client.delete_user(user=user, token=response.json().get('token'))
+        self.user_client.add_user(user=user)
+        response = self.user_client.login_user(user=User(email=user.email, password=user.password))
+        res = self.user_client.delete_user(token=response.json().get('token'))
         assert res.status_code == 200
 
 
     def test_update_user(self, delete_user_fixture):
         user = delete_user_fixture
-        response = self.user_client.add_user(user=user)
-        user = User(email=user.email, password=user.password)
-        response = self.user_client.update_user(user=user, token=response.json().get('token'))
+        self.user_client.add_user(user=user)
+        response = self.user_client.login_user(user=User(email=user.email, password=user.password))
+        response = self.user_client.update_user(user=User(email=user.email, password=user.password), token=response.json().get('token'))
         assert response.status_code == 200
 
     def test_get_user_profile(self, delete_user_fixture):
         user = delete_user_fixture
-        response = self.user_client.add_user(user=user)
+        self.user_client.add_user(user=user)
+        response = self.user_client.login_user(user=User(email=user.email, password=user.password))
         response = self.user_client.get_user_profile(token=response.json().get('token'))
         assert response.status_code == 200
 

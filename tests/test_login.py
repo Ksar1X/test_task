@@ -8,10 +8,11 @@ class TestLogIn:
 
     @fixture(scope='class')
     def get_user_token_fixture(self):
-        user = User(email="garynychxxx@gmail.com", password="q")
+        user = User(email="garynychxxx@gmail.com", password="raketa123")
         response = self.user_client.login_user(user=user)
         token = response.json().get('token')
-        yield token
+        print(token)
+        yield user, token
 
     def test_registered_user_able_login(self):
         user = User(email="garynych@gmail.com", password="raketa123")
@@ -29,14 +30,8 @@ class TestLogIn:
         response = self.user_client.login_user(user=user)
         assert response.status_code == 401
 
-    def test_cannot_logout_without_login(self):
-        user = User(email="garynychxxx@gmail.com", password="raketa1234")
-        response = self.user_client.login_user(user=user)
-        assert response.status_code == 401
-
     def test_logout_user(self, get_user_token_fixture):
-        user = User(email="garynychxxx@gmail.com", password="q")
-        user_token = get_user_token_fixture
+        user, user_token = get_user_token_fixture
         response = self.user_client.logout_user(user=user, token=user_token)
         assert response.status_code == 200
 

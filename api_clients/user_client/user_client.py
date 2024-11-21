@@ -29,6 +29,6 @@ class UserClient(ApiClientBase):
     def update_user(self, user: User, token: str):
         return self.api.patch_req(data=user, postfix_url=self.profile_url, token=token)
 
-    def delete_user(self, user:User, token: str):
-        return self.api.post_req(data=user, postfix_url=self.profile_url, token=token)
+    def delete_user(self, token: str):
+        return self.api.delete_req(postfix_url=self.profile_url, token=token)
 
