@@ -23,7 +23,7 @@ class ApiClientBase:
         return requests.put(url=self.baseUrl + postfix_url, headers=self.default_headers | user_token, data=data.model_dump_json())
 
 
-    def patch_req(self, data:BaseModel,token = "", postfix_url = ""):
+    def patch_req(self, data:BaseModel, token = "", postfix_url = ""):
         user_token['Authorization'] = f'Bearer {token}'
         return requests.patch(url=self.baseUrl + postfix_url, headers=self.default_headers | user_token, data=data.model_dump_json())
 

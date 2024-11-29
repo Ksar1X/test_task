@@ -1,9 +1,7 @@
-from faker import Faker
 from pytest import fixture
-from Generate.generate_unregistered_user import GenerateUser
+
+from Generators.generate_unregistered_user import GenerateUser
 from api_clients.user_client.user_client import *
-
-
 
 user_token_header = dict()
 

@@ -11,7 +11,6 @@ class TestLogIn:
         user = User(email="garynychxxx@gmail.com", password="raketa123")
         response = self.user_client.login_user(user=user)
         token = response.json().get('token')
-        print(token)
         yield user, token
 
     def test_registered_user_able_login(self):
