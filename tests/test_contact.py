@@ -2,6 +2,7 @@ from _pytest.fixtures import fixture
 
 from Generators.generate_contact import ContactGenerator
 from api_clients.contact_client.contact_client import ContactClient
+from api_clients.contact_client.models.requests.contact_field_model import ContactField
 from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 from api_clients.user_client.models.requests.user import User
 from api_clients.user_client.user_client import UserClient
@@ -13,6 +14,7 @@ class TestContact:
     contact_client = ContactClient()
     user_client = UserClient()
     generate_contact = ContactGenerator()
+
 
     @fixture(scope='class')
     def user_get_token_fixture(self):
@@ -69,8 +71,7 @@ class TestContact:
          assert response.status_code == 200
 
     def test_change_contact_field(self, create_contact, user_get_token_fixture):
-         field_to_update = '{\"firstName\":\"asdasdasd\"}'
-         response = self.contact_client.update_contact(contact_id=create_contact, token=user_get_token_fixture, data=field_to_update)
+         response = self.contact_client.update_contact(contact_id=create_contact, token=user_get_token_fixture, data=ContactField(firstName="asdasdasd"))
          assert response.status_code == 200
          response = self.contact_client.get_contact(contact_id=create_contact, token=user_get_token_fixture)
          assert response.status_code == 200

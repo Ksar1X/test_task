@@ -1,7 +1,7 @@
 from _pytest.fixtures import fixture
-
 from api_clients.user_client.models.requests.user import User
 from api_clients.user_client.user_client import UserClient
+
 
 class TestLogIn:
     user_client = UserClient()

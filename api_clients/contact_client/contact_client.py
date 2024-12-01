@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 from api_clients.api_clients_base import ApiClientBase
+from api_clients.contact_client.models.requests.contact_field_model import ContactField
 from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 
 
@@ -21,7 +22,7 @@ class ContactClient(ApiClientBase):
     def put_contact(self, contact_id:str, token: str, data: CreateContact):
         return self.api.put_req(data=data, postfix_url=self.contact_url + '/' + contact_id, token=token)
 
-    def update_contact(self, contact_id:str, token: str, data: CreateContact):
+    def update_contact(self, contact_id:str, token: str, data: ContactField):
         return self.api.patch_req(data=data, postfix_url=self.contact_url + '/' + contact_id, token=token)
 
     def delete_contact(self, contact_id:str, token: str):
