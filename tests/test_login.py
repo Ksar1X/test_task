@@ -1,7 +1,7 @@
 from _pytest.fixtures import fixture
-
 from api_clients.user_client.models.requests.user import User
 from api_clients.user_client.user_client import UserClient
+
 
 class TestLogIn:
     user_client = UserClient()
@@ -11,7 +11,6 @@ class TestLogIn:
         user = User(email="garynychxxx@gmail.com", password="raketa123")
         response = self.user_client.login_user(user=user)
         token = response.json().get('token')
-        print(token)
         yield user, token
 
     def test_registered_user_able_login(self):
