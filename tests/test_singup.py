@@ -35,14 +35,16 @@ class TestSignUp:
         assert response.status_code == 400
 
     def test_create_user_with_incorrect_email_field(self):
-        user = CreateUser(firstName="Joe", lastName="Doe", email="joedoe",password="joedoe123")
-        response = self.user_client.add_user(user=user)
+        user = self.random_user.generate()
+        response = self.user_client.add_user(user=CreateUser(firstName=user.firstName, lastName=user.lastName, email="asdasd3412@", password=user.password))
         assert response.status_code == 400
         assert response.json().get('message') == 'User validation failed: email: Email is invalid'
 
     def test_create_user_with_incorrect_pas_field(self):
-        user = CreateUser(firstName="Joe", lastName="Doe", email="joedoe@gmail.com",password="q")
-        response = self.user_client.add_user(user=user)
+        user = self.random_user.generate()
+        response = self.user_client.add_user(
+            user=CreateUser(firstName=user.firstName, lastName=user.lastName, email=user.email,
+                            password='q'))
         assert response.status_code == 400
         assert response.json().get('message') == 'User validation failed: password: Path `password` (`q`) is shorter than the minimum allowed length (7).'
 
