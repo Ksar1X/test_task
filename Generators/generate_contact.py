@@ -7,7 +7,7 @@ class ContactGenerator(Faker):
     def generate(self):
         contact = CreateContact(firstName=self.first_name(),
                                 lastName=self.last_name(),
-                                birthdate=self.date(), email=self.email(), phone='12345678',
+                                birthdate=self.date(), email=self.email() + self.word(), phone='12345678',
                                 street1=self.city(), street2=self.city(), city=self.city(),
                                 stateProvince=self.current_country_code(), postalCode=self.postalcode(),
                                 country=self.country())
