@@ -1,13 +1,9 @@
 from _pytest.fixtures import fixture
-
-from Generators.generate_unregistered_user import GenerateUser
 from api_clients.user_client.models.requests.user import User
-from api_clients.user_client.user_client import UserClient
+from tests.test_base import BaseTest
 
 
-class TestLogIn:
-    user_client = UserClient()
-    random_user = GenerateUser()
+class TestLogIn(BaseTest):
 
     @fixture(scope='class')
     def create_user_fixture(self):

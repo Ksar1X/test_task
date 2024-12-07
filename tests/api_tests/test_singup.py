@@ -1,13 +1,10 @@
 from pytest import fixture
-from Generators.generate_unregistered_user import GenerateUser
 from api_clients.user_client.user_client import *
+from tests.test_base import BaseTest
 
 user_token_header = dict()
 
-class TestSignUp:
-
-    user_client = UserClient()
-    random_user = GenerateUser()
+class TestSignUp(BaseTest):
 
     @fixture(scope='class')
     def create_user_fixture(self):
