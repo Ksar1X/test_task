@@ -22,7 +22,7 @@ class TestContact:
     @fixture(scope='class')
     def user_get_token_fixture(self):
         user = self.random_user.generate()
-        self.user_client.add_user(user=CreateUser(firstName=user.firstName, lastName=user.lastName, email=user.email, password=user.password))
+        self.user_client.add_user(user=user)
         response = self.user_client.login_user(user=User(email=user.email, password=user.password))
         yield response.json().get('token')
 
@@ -31,7 +31,7 @@ class TestContact:
     @fixture(scope='class')
     def get_contact_id(self):
         user = self.random_user.generate()
-        self.user_client.add_user(user=CreateUser(firstName=user.firstName, lastName=user.lastName, email=user.email, password=user.password))
+        self.user_client.add_user(user=user)
         response = self.user_client.login_user(user=User(email=user.email, password=user.password))
         contact = self.generate_contact.generate()
         response = self.contact_client.add_contact(data=contact, token=response.json().get('token'))
