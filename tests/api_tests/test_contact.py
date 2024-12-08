@@ -34,7 +34,6 @@ class TestContact(BaseTest):
 
 
     def test_cannot_create_contact_without_login(self, user_get_token_fixture):
-        token, user = user_get_token_fixture
         contact = self.random_contact.generate()
         response = self.contact_client.add_contact(data=contact, token='')
         assert response.status_code == 401
