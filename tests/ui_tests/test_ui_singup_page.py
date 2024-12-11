@@ -20,7 +20,7 @@ class TestUISingUpPage(BasePage):
         error = self.driver.find_element(*self.ERROR)
         assert error is not None
 
-    def test_user_cannot_create_without_firstName_field(self):
+    def test_user_cannot_create_without_first_name_field(self):
         self.driver.get(self.sing_up_url)
         last_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)
         last_name_field.send_keys("Fake")
@@ -33,7 +33,7 @@ class TestUISingUpPage(BasePage):
         error = self.driver.find_element(*self.ERROR)
         assert error is not None
 
-    def test_user_cannot_create_without_lastName_field(self):
+    def test_user_cannot_create_without_last_name_field(self):
         self.driver.get(self.sing_up_url)
         first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
         first_name_field.send_keys("Fake")
