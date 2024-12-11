@@ -1,5 +1,4 @@
 from page_objects.base_page import BasePage
-import time
 from selenium.webdriver.support import expected_conditions as EC
 
 
@@ -62,4 +61,4 @@ class TestUILoginPage(BasePage):
         password_field.send_keys("raketa123")
         button = self.driver.find_element(*self.SUBMIT_BUTTON)
         button.click()
-        assert self.wait.until(EC.url_changes(self.base_url + "/contactList"))
+        assert self.wait.until(EC.url_changes(self.contact_url))
