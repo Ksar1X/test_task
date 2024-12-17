@@ -1,3 +1,4 @@
+from api_clients.user_client.models.requests.create_user_model import CreateUser
 from page_objects.base_page import BasePage
 
 
@@ -14,22 +15,22 @@ class SingUpPage(BasePage):
     ERROR = ("xpath", "//span[@id='error']")
 
 
-    def open_browser(self):
+    def open_page(self):
         self.driver.get(self.sing_up_url)
 
     def click_on_submit_button(self):
         self.driver.find_element(*self.SUBMIT_BUTTON).click()
 
-    def create_user(self, email, password, first_name, last_name):
-        self.open_browser()
+    def create_user(self, user:CreateUser):
+        self.open_page()
         first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
-        first_name_field.send_keys(first_name)
+        first_name_field.send_keys(user.firstName)
         last_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)
-        last_name_field.send_keys(last_name)
+        last_name_field.send_keys(user.lastName)
         email_field = self.driver.find_element(*self.EMAIL_FIELD)
-        email_field.send_keys(email)
+        email_field.send_keys(user.email)
         password_field = self.driver.find_element(*self.PASSWORD_FIELD)
-        password_field.send_keys(password)
+        password_field.send_keys(user.password)
         self.click_on_submit_button()
 
     def click_on_cancel_button(self):
