@@ -1,4 +1,4 @@
-
+from api_clients.user_client.models.requests.user import User
 from page_objects.base_page import BasePage
 
 
@@ -12,19 +12,19 @@ class LoginPage(BasePage):
 
 
 
-    def open_browser(self):
+    def open_page(self):
         self.driver.get(self.base_url)
 
     def click_on_submit_button(self):
         button = self.driver.find_element(*self.SUBMIT_BUTTON)
         button.click()
 
-    def login(self, email, password):
-        self.open_browser()
+    def login(self, user:User):
+        self.open_page()
         email_field = self.driver.find_element(*self.EMAIL_FIELD)
-        email_field.send_keys(email)
+        email_field.send_keys(user.email)
         password_field = self.driver.find_element(*self.PASSWORD_FIELD)
-        password_field.send_keys(password)
+        password_field.send_keys(user.password)
         self.click_on_submit_button()
 
 

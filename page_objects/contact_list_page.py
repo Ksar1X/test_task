@@ -1,5 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 
+from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 from page_objects.base_page import BasePage
 
 
@@ -23,38 +24,37 @@ class ContactListPage(BasePage):
 
     ERROR = ("xpath", "//span[@id='error']")
 
-    def open_browser(self):
+    def open_page(self):
         self.driver.get(self.contact_url)
 
     def click_on_submit_button(self):
         self.driver.find_element(*self.SUBMIT_BUTTON).click()
 
-    def create_contact(self, first_name, second_name, birthdate, email, phone, first_street, second_street, city, state, postal_code, country):
-        self.open_browser()
+    def create_contact(self, contact: CreateContact):
+        self.open_page()
         self.driver.find_element(*self.ADD_CONTACT_BUTTON).click()
-        assert self.wait.until(EC.url_changes(self.add_contact_url))
         first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
-        first_name_field.send_keys(first_name)
+        first_name_field.send_keys(contact.firstName)
         second_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)
-        second_name_field.send_keys(second_name)
+        second_name_field.send_keys(contact.lastName)
         birthdate_field = self.driver.find_element(*self.BIRTHDATE_FIELD)
-        birthdate_field.send_keys(birthdate)
+        birthdate_field.send_keys(contact.birthdate)
         email_field = self.driver.find_element(*self.EMAIL_FIELD)
-        email_field.send_keys(email)
+        email_field.send_keys(contact.email)
         phone_field = self.driver.find_element(*self.PHONE_FIELD)
-        phone_field.send_keys(phone)
+        phone_field.send_keys(contact.phone)
         first_street_field = self.driver.find_element(*self.FIRST_STREET_FIELD)
-        first_street_field.send_keys(first_street)
+        first_street_field.send_keys(contact.street1)
         second_street_field = self.driver.find_element(*self.SECOND_STREET_FIELD)
-        second_street_field.send_keys(second_street)
+        second_street_field.send_keys(contact.street2)
         city_field = self.driver.find_element(*self.CITY_FIELD)
-        city_field.send_keys(city)
+        city_field.send_keys(contact.city)
         state_field = self.driver.find_element(*self.STATE_PROVINCE_FIELD)
-        state_field.send_keys(state)
+        state_field.send_keys(contact.stateProvince)
         postal_field = self.driver.find_element(*self.POSTAL_CODE_FIELD)
-        postal_field.send_keys(postal_code)
+        postal_field.send_keys(contact.postalCode)
         country_field = self.driver.find_element(*self.COUNTRY_FIELD)
-        country_field.send_keys(country)
+        country_field.send_keys(contact.country)
         self.click_on_submit_button()
 
     def find_error(self):

@@ -1,7 +1,6 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
+
+from tests.singleton import Singleton
 
 
 class BasePage:
@@ -11,7 +10,6 @@ class BasePage:
     contact_url = "https://thinking-tester-contact-list.herokuapp.com/contactList"
     add_contact_url = "https://thinking-tester-contact-list.herokuapp.com/addContact"
 
-    service = Service(executable_path=ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service)
+    driver = Singleton()
     wait = WebDriverWait(driver, 15, poll_frequency=1)
 
