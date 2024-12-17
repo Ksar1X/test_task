@@ -1,5 +1,3 @@
-from selenium.webdriver.support import expected_conditions as EC
-
 from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 from page_objects.base_page import BasePage
 
@@ -9,7 +7,9 @@ class ContactListPage(BasePage):
     ADD_CONTACT_BUTTON = ("xpath", "//button[@id='add-contact']")
     SUBMIT_BUTTON = ("xpath", "//button[@id='submit']")
     CANCEL_BUTTON = ("xpath", "//button[@id='cancel']")
+    DELETE_BUTTON = ("xpath", "//*[@id='myTable']/tr[1]")
 
+    CONTACT_ROW = ("xpath", "//tr[@class='contactTableBodyRow']")
     FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
     LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
     BIRTHDATE_FIELD = ("xpath", "//input[@id='birthdate']")
@@ -60,6 +60,10 @@ class ContactListPage(BasePage):
     def find_error(self):
         return self.driver.find_element(*self.ERROR)
 
+    def delete_contact(self):
+        self.open_page()
+        self.driver.find_element(*self.CONTACT_ROW).click()
+        self.driver.find_element(*self.DELETE_BUTTON).click()
 
 
 
