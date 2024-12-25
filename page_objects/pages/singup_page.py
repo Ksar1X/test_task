@@ -1,5 +1,5 @@
 from api_clients.user_client.models.requests.create_user_model import CreateUser
-from page_objects.base_page import BasePage
+from page_objects.pages.base_page import BasePage
 
 
 class SingUpPage(BasePage):

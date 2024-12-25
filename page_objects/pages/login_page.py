@@ -1,5 +1,5 @@
 from api_clients.user_client.models.requests.user import User
-from page_objects.base_page import BasePage
+from page_objects.pages.base_page import BasePage
 
 
 class LoginPage(BasePage):
@@ -28,7 +28,7 @@ class LoginPage(BasePage):
         self.click_on_submit_button()
 
 
-    def click_on_singup_button(self):
+    def click_on_sing_up_button(self):
         button = self.driver.find_element(*self.SIGN_UP_BUTTON)
         button.click()
 
