@@ -1,3 +1,5 @@
+import time
+
 from api_clients.user_client.models.requests.user import User
 from page_objects.pages.base_page import BasePage
 

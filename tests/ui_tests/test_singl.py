@@ -1,7 +1,7 @@
 from tests.singleton import Singleton
 
 
-class TestSingleton():
+class TestSingleton:
 
     def test_singleton(self):
         s1 = Singleton()

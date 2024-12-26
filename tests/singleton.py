@@ -12,4 +12,5 @@ class Singleton(object):
             service = Service(executable_path=ChromeDriverManager().install())
             cls.__instance = webdriver.Chrome(service=service)
             return cls.__instance
-
+        else:
+            return cls.__instance
