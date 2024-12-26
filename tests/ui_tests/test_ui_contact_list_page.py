@@ -3,7 +3,24 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class TestUIContactListPage(BaseTest):
 
-    def test_add_contact_to_contact_list(self):
+    @fixture(scope="class")
+    def login_user_fixture(self):
+        user = User(email="garynychxxx@gmail.com", password="raketa123")
+        self.login_page.login(user)
+        response = self.user_client.login_user(user)
+        yield response
+        self.base_page.driver.quit()
+
+
+    def test_delete_contact(self, login_user_fixture):
+        response = login_user_fixture
         contact = self.random_contact.generate()
-        self.contact_list_page.create_contact(first_name=contact.firstName, second_name=contact.lastName, birthdate=contact.birthdate, email=contact.email, phone=contact.phone, first_street=contact.street1, second_street=contact.street2, city=contact.city, state=contact.stateProvince, postal_code=contact.postalCode, country=contact.country)
-        assert self.contact_list_page.wait.until(EC.url_changes(self.login_page.contact_url))
+        self.contact_client.add_contact(data=contact,token=response.json().get('token'))
+        ##self.contact_list_page.wait.until(EC.visibility_of_element_located(self.contact_list_page.CONTACT_ROW)) -- как это через ожидания сделать?????????
+        self.base_page.driver.refresh()
+        time.sleep(1)
+        self.contact_list_page.delete_contact()
+        self.contact_page.click_on_delete_button()
+        contact_list = self.contact_client.get_contact_list(token=response.json().get('token'))
+        assert contact.lastName not in contact_list
+
