@@ -1,10 +1,10 @@
 from selenium.webdriver.support import expected_conditions as EC
 
 from api_clients.user_client.models.requests.create_user_model import CreateUser
-from tests.test_base import BaseTest
+from tests.test_base_ui import BaseUiTest
 
 
-class TestUISingUpPage(BaseTest):
+class TestUISingUpPage(BaseUiTest):
 
     FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
     LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")

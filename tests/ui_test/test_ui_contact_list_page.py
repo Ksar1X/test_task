@@ -4,17 +4,20 @@ from _pytest.fixtures import fixture
 
 from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 from api_clients.user_client.models.requests.user import User
-from tests.test_base import BaseTest
+
 from selenium.webdriver.support import expected_conditions as EC
 
-class TestUIContactListPage(BaseTest):
+from tests.test_base_ui import BaseUiTest
+
+
+class TestUIContactListPage(BaseUiTest):
 
     @fixture(scope="class")
     def login_user_fixture(self):
         user = User(email="garynychxxx@gmail.com", password="raketa123")
         response = self.user_client.login_user(user)
         yield response, user
-        self.base_page.driver.quit()
+        self.driver.quit()
 
 
     def test_delete_contact(self, login_user_fixture):
