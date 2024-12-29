@@ -1,8 +1,10 @@
+from _pytest.fixtures import fixture
+
 from api_clients.user_client.models.requests.create_user_model import CreateUser
-from page_objects.pages.base_page import BasePage
+from tests.test_base_ui import BaseUiTest
 
 
-class SingUpPage(BasePage):
+class SingUpPage(BaseUiTest):
 
     FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
     LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
@@ -14,15 +16,18 @@ class SingUpPage(BasePage):
 
     ERROR = ("xpath", "//span[@id='error']")
 
-
-    def open_page(self):
+    @fixture(scope='class')
+    def open_close_page(self):
         self.driver.get(self.sing_up_url)
+        yield
+        self.driver.quit()
+
 
     def click_on_submit_button(self):
         self.driver.find_element(*self.SUBMIT_BUTTON).click()
 
-    def create_user(self, user:CreateUser):
-        self.open_page()
+    def create_user(self, user:CreateUser, open_close_page):
+        page = self.open_close_page
         first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
         first_name_field.send_keys(user.firstName)
         last_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)

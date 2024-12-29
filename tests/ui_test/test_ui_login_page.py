@@ -1,10 +1,10 @@
 from selenium.webdriver.support import expected_conditions as EC
 
 from api_clients.user_client.models.requests.user import User
-from tests.test_base import BaseTest
+from tests.test_base_ui import BaseUiTest
 
 
-class TestUILoginPage(BaseTest):
+class TestUILoginPage(BaseUiTest):
 
 
     def test_user_cannot_login_with_empty_fields(self):

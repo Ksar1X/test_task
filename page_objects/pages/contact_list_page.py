@@ -1,7 +1,7 @@
-from page_objects.pages.base_page import BasePage
+from tests.test_base_ui import BaseUiTest
 
 
-class ContactListPage(BasePage):
+class ContactListPage(BaseUiTest):
 
     ADD_CONTACT_BUTTON = ("xpath", "//button[@id='add-contact']")
 

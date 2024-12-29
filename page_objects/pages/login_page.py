@@ -1,10 +1,10 @@
 import time
 
 from api_clients.user_client.models.requests.user import User
-from page_objects.pages.base_page import BasePage
+from tests.test_base_ui import BaseUiTest
 
 
-class LoginPage(BasePage):
+class LoginPage(BaseUiTest):
 
     SUBMIT_BUTTON = ("xpath", "//button[@id='submit']")
     SIGN_UP_BUTTON = ("xpath", "//button[@id='signup']")

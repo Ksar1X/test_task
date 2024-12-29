@@ -1,7 +1,7 @@
-from page_objects.pages.base_page import BasePage
+from tests.test_base_ui import BaseUiTest
 
 
-class ContactPage(BasePage):
+class ContactPage(BaseUiTest):
 
     DELETE_BUTTON = ("xpath", "//button[@id='delete']")
 
