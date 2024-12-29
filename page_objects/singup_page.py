@@ -1,10 +1,7 @@
-from _pytest.fixtures import fixture
-
-from api_clients.user_client.models.requests.create_user_model import CreateUser
-from tests.test_base_ui import BaseUiTest
+from page_objects.base_page import BasePage
 
 
-class SingUpPage(BaseUiTest):
+class SingUpPage(BasePage):
 
     FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
     LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
@@ -16,26 +13,23 @@ class SingUpPage(BaseUiTest):
 
     ERROR = ("xpath", "//span[@id='error']")
 
-    @fixture(scope='class')
-    def open_close_page(self):
-        self.driver.get(self.sing_up_url)
-        yield
-        self.driver.quit()
 
+    def open_browser(self):
+        self.driver.get(self.sing_up_url)
 
     def click_on_submit_button(self):
         self.driver.find_element(*self.SUBMIT_BUTTON).click()
 
-    def create_user(self, user:CreateUser, open_close_page):
-        page = self.open_close_page
+    def create_user(self, email, password, first_name, last_name):
+        self.open_browser()
         first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
-        first_name_field.send_keys(user.firstName)
+        first_name_field.send_keys(first_name)
         last_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)
-        last_name_field.send_keys(user.lastName)
+        last_name_field.send_keys(last_name)
         email_field = self.driver.find_element(*self.EMAIL_FIELD)
-        email_field.send_keys(user.email)
+        email_field.send_keys(email)
         password_field = self.driver.find_element(*self.PASSWORD_FIELD)
-        password_field.send_keys(user.password)
+        password_field.send_keys(password)
         self.click_on_submit_button()
 
     def click_on_cancel_button(self):

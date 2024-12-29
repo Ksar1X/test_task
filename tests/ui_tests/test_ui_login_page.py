@@ -1,33 +1,30 @@
 from selenium.webdriver.support import expected_conditions as EC
-
-from api_clients.user_client.models.requests.user import User
-from tests.test_base_ui import BaseUiTest
+from tests.test_base import BaseTest
 
 
-class TestUILoginPage(BaseUiTest):
+class TestUILoginPage(BaseTest):
 
 
     def test_user_cannot_login_with_empty_fields(self):
-        user = User(email='', password='')
-        self.login_page.login(user)
+        self.login_page.login(email='', password='')
         error = self.login_page.find_error()
         assert error is not None
 
     def test_cannot_login_unregistered_user(self):
         user = self.random_user.generate()
-        self.login_page.login(user)
+        self.login_page.login(email=user.email, password=user.password)
         error = self.login_page.find_error()
         assert error is not None
 
     def test_cannot_login_without_email_field(self):
         user = self.random_user.generate()
-        self.login_page.login(User(email='', password=user.password))
+        self.login_page.login(email='', password=user.password)
         error = self.login_page.find_error()
         assert error is not None
 
     def test_cannot_login_without_password_field(self):
         user = self.random_user.generate()
-        self.login_page.login(User(email=user.email, password=''))
+        self.login_page.login(email=user.email, password='')
         error = self.login_page.find_error()
         assert error is not None
 
@@ -36,5 +33,5 @@ class TestUILoginPage(BaseUiTest):
         assert self.login_page.wait.until(EC.url_changes(self.login_page.contact_url))
 
     def test_login_user(self):
-        self.login_page.login(User(email="garynychxxx@gmail.com", password="raketa123"))
+        self.login_page.login(email="garynychxxx@gmail.com", password="raketa123")
         assert self.login_page.wait.until(EC.url_changes(self.login_page.contact_url))
