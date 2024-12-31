@@ -7,10 +7,8 @@ class SingUpPage(BasePage):
     LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
     EMAIL_FIELD = ("xpath", "//input[@id='email']")
     PASSWORD_FIELD = ("xpath", "//input[@id='password']")
-
     SUBMIT_BUTTON = ("xpath", "//button[@id='submit']")
     CANCEL_BUTTON = ("xpath", "//button[@id='cancel']")
-
     ERROR = ("xpath", "//span[@id='error']")
 
 

@@ -1,5 +1,5 @@
 from api_clients.user_client.models.requests.user import User
-from page_objects.pages.base_page import BasePage
+from page_objects.base_page import BasePage
 
 
 class LoginPage(BasePage):
@@ -14,6 +14,7 @@ class LoginPage(BasePage):
 
     def open_browser(self):
         self.driver.get(self.base_url)
+
 
     def click_on_submit_button(self):
         button = self.driver.find_element(*self.SUBMIT_BUTTON)

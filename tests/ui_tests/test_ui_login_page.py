@@ -1,12 +1,13 @@
 from selenium.webdriver.support import expected_conditions as EC
-from tests.test_base import BaseTest
+
+from tests.test_base_ui import TestBaseUi
 
 
-class TestUILoginPage(BaseTest):
+class TestUILoginPage(TestBaseUi):
 
 
     def test_user_cannot_login_with_empty_fields(self):
-        self.login_page.login(email='', password='')
+        self.login_page.login(email="", password="")
         error = self.login_page.find_error()
         assert error is not None
 
