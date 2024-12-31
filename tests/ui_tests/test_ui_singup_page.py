@@ -1,16 +1,8 @@
 from selenium.webdriver.support import expected_conditions as EC
-from tests.test_base import BaseTest
+from tests.test_base_ui import TestBaseUi
 
 
-class TestUISingUpPage(BaseTest):
-
-    FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
-    LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
-    EMAIL_FIELD = ("xpath", "//input[@id='email']")
-    PASSWORD_FIELD = ("xpath", "//input[@id='password']")
-    SUBMIT_BUTTON = ("xpath", "//button[@id='submit']")
-    CANCEL_BUTTON = ("xpath", "//button[@id='cancel']")
-    ERROR = ("xpath", "//span[@id='error']")
+class TestUISingUpPage(TestBaseUi):
 
 
     def test_user_cannot_create_without_empty_fields(self):
