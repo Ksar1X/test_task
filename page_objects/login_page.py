@@ -15,6 +15,9 @@ class LoginPage(BasePage):
     def open_browser(self):
         self.driver.get(self.base_url)
 
+    def close_browser(self):
+        self.driver.quit()
+
 
     def click_on_submit_button(self):
         button = self.driver.find_element(*self.SUBMIT_BUTTON)
@@ -29,9 +32,10 @@ class LoginPage(BasePage):
         self.click_on_submit_button()
 
 
-    def click_on_singup_button(self):
+    def click_on_sing_up_button(self):
         button = self.driver.find_element(*self.SIGN_UP_BUTTON)
         button.click()
 
-    def find_error(self):
-        return self.driver.find_element(*self.ERROR)
+    def error(self):
+        error = self.driver.find_element(*self.ERROR)
+        return error.text

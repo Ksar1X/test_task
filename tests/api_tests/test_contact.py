@@ -1,6 +1,5 @@
 from _pytest.fixtures import fixture
 from api_clients.contact_client.models.requests.contact_field_model import ContactField
-from api_clients.contact_client.models.requests.create_contact_model import CreateContact
 from api_clients.user_client.models.requests.user import User
 from tests.test_base import BaseTest
 
@@ -41,21 +40,14 @@ class TestContact(BaseTest):
     def test_cannot_add_contact_without_firstname_field(self, user_get_token_fixture):
         contact = self.random_contact.generate()
         token, user = user_get_token_fixture
-        contact = CreateContact(firstName="", lastName=contact.lastName, birthdate=contact.birthdate, email=contact.email,
-                                phone=contact.phone, street1=contact.street1, street2=contact.street2,
-                                city=contact.city, stateProvince=contact.stateProvince, postalCode=contact.postalCode, country=contact.country)
-
+        contact.firstName = ""
         response = self.contact_client.add_contact(data=contact, token=token)
         assert response.status_code == 400
 
     def test_cannot_add_contact_without_lastname_field(self, user_get_token_fixture):
         contact = self.random_contact.generate()
         token, user = user_get_token_fixture
-        contact = CreateContact(firstName=contact.firstName, lastName="", birthdate=contact.birthdate,
-                                email=contact.email,
-                                phone=contact.phone, street1=contact.street1, street2=contact.street2,
-                                city=contact.city, stateProvince=contact.stateProvince, postalCode=contact.postalCode,
-                                country=contact.country)
+        contact.lastName = ""
         response = self.contact_client.add_contact(data=contact, token=token)
         assert response.status_code == 400
 

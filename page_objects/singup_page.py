@@ -34,5 +34,6 @@ class SingUpPage(BasePage):
         self.driver.get(self.sing_up_url)
         self.driver.find_element(*self.CANCEL_BUTTON).click()
 
-    def find_error(self):
-        return self.driver.find_element(*self.ERROR)
+    def error(self):
+        error = self.driver.find_element(*self.ERROR)
+        return error.text
