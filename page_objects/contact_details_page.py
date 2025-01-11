@@ -1,7 +1,7 @@
-from page_objects.base_page import BasePage
+from page_objects.contact_list_page import ContactListPage
 
 
-class ContactDetailsPage(BasePage):
+class ContactDetailsPage(ContactListPage):
 
     EDIT_CONTACT_BUTTON = ("xpath", "//button[@id='edit-contact']")
     DELETE_CONTACT_BUTTON = ("xpath", "//button[@id='delete']")
