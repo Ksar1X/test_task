@@ -1,8 +1,7 @@
-from selenium import webdriver
 from selenium.webdriver import ActionChains
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
+from tests.singleton import Singleton
+
 
 class BasePage:
 
@@ -12,8 +11,7 @@ class BasePage:
     add_contact_url = "https://thinking-tester-contact-list.herokuapp.com/addContact"
     contact_details_url = "https://thinking-tester-contact-list.herokuapp.com/contactDetails"
 
-    service = Service(executable_path=ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service)
+    driver = Singleton()
     wait = WebDriverWait(driver, 15, poll_frequency=1)
 
     actions = ActionChains(driver)

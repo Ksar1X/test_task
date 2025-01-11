@@ -1,6 +1,5 @@
 import time
 
-from _pytest.fixtures import fixture
 from selenium.webdriver.support import expected_conditions as EC
 
 from tests.test_base_ui import TestBaseUi
