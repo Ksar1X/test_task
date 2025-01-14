@@ -1,39 +1,42 @@
+from selenium.webdriver.common.by import By
+
+from api_clients.user_client.models.requests.create_user_model import CreateUser
 from page_objects.base_page import BasePage
+from page_objects.element import Element
 
 
 class SingUpPage(BasePage):
-
-    FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
-    LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
-    EMAIL_FIELD = ("xpath", "//input[@id='email']")
-    PASSWORD_FIELD = ("xpath", "//input[@id='password']")
-    SUBMIT_BUTTON = ("xpath", "//button[@id='submit']")
-    CANCEL_BUTTON = ("xpath", "//button[@id='cancel']")
-    ERROR = ("xpath", "//span[@id='error']")
-
 
     def open_browser(self):
         self.driver.get(self.sing_up_url)
 
     def click_on_submit_button(self):
-        self.driver.find_element(*self.SUBMIT_BUTTON).click()
+        element = Element((By.ID, "submit"))
+        web_element = element.find(self.driver)
+        web_element.click()
 
-    def create_user(self, email, password, first_name, last_name):
+    def create_user(self, user:CreateUser):
         self.open_browser()
-        first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
-        first_name_field.send_keys(first_name)
-        last_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)
-        last_name_field.send_keys(last_name)
-        email_field = self.driver.find_element(*self.EMAIL_FIELD)
-        email_field.send_keys(email)
-        password_field = self.driver.find_element(*self.PASSWORD_FIELD)
-        password_field.send_keys(password)
+        element = Element((By.ID, "firstName"))
+        web_element = element.find(self.driver)
+        web_element.send_keys(user.firstName)
+        element = Element((By.ID, "lastName"))
+        web_element = element.find(self.driver)
+        web_element.send_keys(user.lastName)
+        element = Element((By.ID, "email"))
+        web_element = element.find(self.driver)
+        web_element.send_keys(user.email)
+        element = Element((By.ID, "password"))
+        web_element = element.find(self.driver)
+        web_element.send_keys(user.password)
         self.click_on_submit_button()
 
     def click_on_cancel_button(self):
-        self.driver.get(self.sing_up_url)
-        self.driver.find_element(*self.CANCEL_BUTTON).click()
+        element = Element((By.ID, "cancel"))
+        web_element = element.find(self.driver)
+        web_element.click()
 
     def error(self):
-        error = self.driver.find_element(*self.ERROR)
-        return error.text
+        element = Element((By.ID, "error"))
+        web_element = element.find(self.driver)
+        return web_element.text
