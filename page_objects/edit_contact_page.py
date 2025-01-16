@@ -1,92 +1,91 @@
 from selenium.webdriver import Keys
+from selenium.webdriver.common.by import By
+
 from page_objects.contact_details_page import ContactDetailsPage
+from page_objects.element import Element
 
 
 class EditContactPage(ContactDetailsPage):
-    FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
-    LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
-    DATE_OF_BIRTH_FIELD = ("xpath", "//input[@id='birthdate']")
-    EMAIL_FIELD = ("xpath", "//input[@id='email']")
-    PHONE_FIELD = ("xpath", "//input[@id='phone']")
-    STREET1_FIELD = ("xpath", "//input[@id='street1']")
-    STREET2_FIELD = ("xpath", "//input[@id='street2']")
-    CITY_FIELD = ("xpath", "//input[@id='city']")
-    STATE_FIELD = ("xpath", "//input[@id='stateProvince']")
-    POSTAL_CODE_FIELD = ("xpath", "//input[@id='postalCode']")
-    COUNTRY_FIELD = ("xpath", "//input[@id='country']")
 
-    SUBMIT_BUTTON = ("xpath", "//button[@id='submit']")
-    CANCEL_BUTTON = ("xpath", "//button[@id='cancel']")
+    first_name_field = Element((By.ID, "firstName"))
+    last_name_field = Element((By.ID, "lastName"))
+    birthdate_field = Element((By.ID, "birthdate"))
+    email_field = Element((By.ID, "email"))
+    phone_field = Element((By.ID, "phone"))
+    street1_field = Element((By.ID, "street1"))
+    street2_field = Element((By.ID, "street2"))
+    city_field = Element((By.ID, "city"))
+    state_field = Element((By.ID, "stateProvince"))
+    postal_code_field = Element((By.ID, "postalCode'"))
+    country_field = Element((By.ID, "country'"))
+
+    submit_button = Element((By.ID, "submit'"))
+    cancel_button = Element((By.ID, "cancel"))
 
     def change_first_name_field(self, message):
-        first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
-        self.actions.click(first_name_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        first_name_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.first_name_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.first_name_field.send(message)
+        self.submit_button.click()
 
     def change_last_name_field(self, message):
-        last_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)
-        self.actions.click(last_name_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        last_name_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.last_name_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.last_name_field.send(message)
+        self.submit_button.click()
 
     def change_birth_date_field(self, message):
-        birth_date_field = self.driver.find_element(*self.DATE_OF_BIRTH_FIELD)
-        self.actions.click(birth_date_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        birth_date_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.birthdate_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.birthdate_field.send(message)
+        self.submit_button.click()
 
     def change_email_field(self, message):
-        email_field = self.driver.find_element(*self.EMAIL_FIELD)
-        self.actions.click(email_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        email_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.email_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.email_field.send(message)
+        self.submit_button.click()
+
 
     def change_phone_field(self, message):
-        phone_field = self.driver.find_element(*self.PHONE_FIELD)
-        self.actions.click(phone_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        phone_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.phone_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.phone_field.send(message)
+        self.submit_button.click()
 
     def change_street1_field(self, message):
-        street1_field = self.driver.find_element(*self.STREET1_FIELD)
-        self.actions.click(street1_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        street1_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.street1_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.street1_field.send(message)
+        self.submit_button.click()
 
     def change_street2_field(self, message):
-        street2_field = self.driver.find_element(*self.STREET2_FIELD)
-        self.actions.click(street2_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        street2_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.street2_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.street2_field.send(message)
+        self.submit_button.click()
 
     def change_city_field(self, message):
-        city_field = self.driver.find_element(*self.CITY_FIELD)
-        self.actions.click(city_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        city_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.city_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.city_field.send(message)
+        self.submit_button.click()
 
     def change_state_province_field(self, message):
-        sp_field = self.driver.find_element(*self.STATE_FIELD)
-        self.actions.click(sp_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        sp_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.state_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.state_field.send(message)
+        self.submit_button.click()
 
     def change_postal_code_field(self, message):
-        pc_field = self.driver.find_element(*self.POSTAL_CODE_FIELD)
-        self.actions.click(pc_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        pc_field.send_keys(message)
-        self.click_on_submit_button()
+        field = self.postal_code_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.postal_code_field.send(message)
+        self.submit_button.click()
 
     def change_country_field(self, message):
-        country_field = self.driver.find_element(*self.COUNTRY_FIELD)
-        self.actions.click(country_field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
-        country_field.send_keys(message)
-        self.click_on_submit_button()
-
-    def click_on_submit_button(self):
-        self.driver.find_element(*self.SUBMIT_BUTTON).click()
-
-    def click_on_cancel_button(self):
-        self.driver.find_element(*self.CANCEL_BUTTON).click()
+        field = self.country_field.find()
+        self.actions.click(field).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        self.country_field.send(message)
+        self.submit_button.click()
 

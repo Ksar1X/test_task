@@ -7,36 +7,23 @@ from page_objects.element import Element
 
 class SingUpPage(BasePage):
 
-    def open_browser(self):
-        self.driver.get(self.sing_up_url)
+    submit_button = Element((By.ID, "submit"))
+    cancel_button = Element((By.ID, "cancel"))
 
-    def click_on_submit_button(self):
-        element = Element((By.ID, "submit"))
-        web_element = element.find(self.driver)
-        web_element.click()
+    first_name_field = Element((By.ID, "firstName"))
+    last_name_field = Element((By.ID, "lastName"))
+    email_field = Element((By.ID, "email"))
+    password_field = Element((By.ID, "password"))
+
+    error = Element((By.ID, "error"))
 
     def create_user(self, user:CreateUser):
-        self.open_browser()
-        element = Element((By.ID, "firstName"))
-        web_element = element.find(self.driver)
-        web_element.send_keys(user.firstName)
-        element = Element((By.ID, "lastName"))
-        web_element = element.find(self.driver)
-        web_element.send_keys(user.lastName)
-        element = Element((By.ID, "email"))
-        web_element = element.find(self.driver)
-        web_element.send_keys(user.email)
-        element = Element((By.ID, "password"))
-        web_element = element.find(self.driver)
-        web_element.send_keys(user.password)
-        self.click_on_submit_button()
+        self.first_name_field.send(user.firstName)
+        self.last_name_field.send(user.lastName)
+        self.email_field.send(user.email)
+        self.password_field.send(user.password)
+        self.submit_button.click()
 
-    def click_on_cancel_button(self):
-        element = Element((By.ID, "cancel"))
-        web_element = element.find(self.driver)
-        web_element.click()
 
-    def error(self):
-        element = Element((By.ID, "error"))
-        web_element = element.find(self.driver)
-        return web_element.text
+    def find_error(self):
+        return self.error.get_text()

@@ -6,12 +6,10 @@ from page_objects.element import Element
 
 class ContactListPage(BasePage):
 
-    CONTACT_ROW = ("xpath", "//td[1]")
+    add_contact_button = Element((By.ID, "add_contact"))
 
     def add_contact(self):
-        element = Element((By.ID, "add-contact"))
-        web_element = element.find(self.driver)
-        web_element.click()
+        self.add_contact_button.click()
 
     def click_on_contact(self, email):
         self.driver.find_element("xpath",f"//td[contains(text(),'{email}')]").click()

@@ -6,22 +6,17 @@ from page_objects.element import Element
 
 class ContactDetailsPage(ContactListPage):
 
-    EDIT_CONTACT_BUTTON = ("xpath", "//button[@id='edit-contact']")
-    DELETE_CONTACT_BUTTON = ("xpath", "//button[@id='delete']")
-    RETURN_TO_CONTACT_LIST_BUTTON = ("xpath", "//button[@id='return']")
+    edit_contact_button = Element((By.ID, "edit-contact"))
+    delete_contact_button = Element((By.ID, "delete"))
+
+    return_to_contact_list_button = Element((By.ID, "return"))
 
     def return_to_contact_list_page(self):
-        element = Element((By.ID, "return"))
-        web_element = element.find(self.driver)
-        web_element.click()
+        self.return_to_contact_list_button.click()
 
     def go_to_edit_contact_page(self):
-        element = Element((By.ID, "edit-contact"))
-        web_element = element.find(self.driver)
-        web_element.click()
+        self.edit_contact_button.click()
 
     def delete_contact(self):
-        element = Element((By.ID, "delete"))
-        web_element = element.find(self.driver)
-        web_element.click()
+        self.delete_contact_button.click()
         self.driver.switch_to.alert.accept()

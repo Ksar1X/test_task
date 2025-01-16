@@ -8,6 +8,12 @@ from tests.test_base_ui import TestBaseUi
 class TestUIContactListPage(TestBaseUi):
 
     @fixture
+    def open_and_close_browser_fixture(self):
+        self.base_page.driver.get(self.base_page.base_url)
+        yield
+        self.base_page.driver.quit()
+
+    @fixture
     def login_user_fixture(self):
         user = self.random_user.generate()
         self.user_client.add_user(user=user)

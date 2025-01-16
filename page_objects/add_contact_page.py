@@ -7,25 +7,23 @@ from page_objects.element import Element
 
 class AddContactPage(ContactListPage):
 
+    contact_first_name_field = Element((By.ID, "firstName"))
+    contact_last_name_field = Element((By.ID, "lastName"))
+
+    submit_button = Element((By.ID, "submit"))
+    cancel_button = Element((By.ID, "cancel"))
+
+    error = Element((By.ID, "error"))
+
     def add_new_contact(self, contact:ContactModel):
-        element = Element((By.ID, "firstName"))
-        web_element = element.find(self.driver)
-        web_element.send_keys(contact.firstName)
-        element = Element((By.ID, "lastName"))
-        web_element = element.find(self.driver)
-        web_element.send_keys(contact.lastName)
+        self.contact_first_name_field.send(contact.firstName)
+        self.contact_last_name_field.send(contact.lastName)
 
     def click_on_submit_button(self):
-        element = Element((By.ID, "submit"))
-        web_element = element.find(self.driver)
-        web_element.click()
+        self.submit_button.click()
 
-    def error(self):
-        element = Element((By.ID, "error"))
-        web_element = element.find(self.driver)
-        return web_element.text
+    def fiend_error(self):
+        return self.error.get_text()
 
     def click_on_cancel_button(self):
-        element = Element((By.ID, "error"))
-        web_element = element.find(self.driver)
-        web_element.click()
+        self.cancel_button.click()
