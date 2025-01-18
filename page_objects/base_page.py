@@ -1,9 +1,11 @@
-from selenium.webdriver import ActionChains
-from selenium.webdriver.support.wait import WebDriverWait
-from tests.singleton import Singleton
+from tests.singleton import WebDriverSingleton
 
 
 class BasePage:
+
+    def __init__(self):
+        self.driver = WebDriverSingleton().get_driver()
+
 
     base_url = "https://thinking-tester-contact-list.herokuapp.com"
     sing_up_url = "https://thinking-tester-contact-list.herokuapp.com/addUser"
@@ -11,7 +13,7 @@ class BasePage:
     add_contact_url = "https://thinking-tester-contact-list.herokuapp.com/addContact"
     contact_details_url = "https://thinking-tester-contact-list.herokuapp.com/contactDetails"
 
-    driver = Singleton()
-    wait = WebDriverWait(driver, 15, poll_frequency=1)
 
-    actions = ActionChains(driver)
+    def close_browser(self):
+        WebDriverSingleton.quit_driver()
+

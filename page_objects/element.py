@@ -1,12 +1,12 @@
-from page_objects.base_page import BasePage
+from tests.singleton import WebDriverSingleton
 
 
-class Element(BasePage):
+class Element:
     def __init__(self, locator: tuple):
         self.locator = locator
 
     def find(self):
-        return self.driver.find_element(*self.locator)
+        return WebDriverSingleton.get_driver().find_element(*self.locator)
 
     def click(self):
         element = self.find()

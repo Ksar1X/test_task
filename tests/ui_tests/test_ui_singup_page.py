@@ -1,8 +1,10 @@
 import time
 
-from selenium.webdriver.support import expected_conditions as EC
 from _pytest.fixtures import fixture
+from selenium.webdriver.support import expected_conditions as EC
+
 from api_clients.user_client.models.requests.create_user_model import CreateUser
+from tests.singleton import WebDriverSingleton
 from tests.test_base_ui import TestBaseUi
 
 
@@ -10,9 +12,10 @@ class TestUISingUpPage(TestBaseUi):
 
     @fixture
     def open_and_close_browser_fixture(self):
-        self.base_page.driver.get(self.base_page.sing_up_url)
+        WebDriverSingleton.get_driver()
+        WebDriverSingleton.get_driver().get(self.base_page.sing_up_url)
         yield
-        self.base_page.driver.quit()
+        WebDriverSingleton.quit_driver()
 
     def test_user_cannot_create_without_empty_fields(self, open_and_close_browser_fixture):
         browser = open_and_close_browser_fixture
