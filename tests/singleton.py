@@ -1,3 +1,6 @@
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
+from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -17,6 +20,8 @@ class WebDriverSingleton:
                 service = Service(executable_path=ChromeDriverManager().install())
                 cls._instance.driver = webdriver.Chrome(service=service, options=options)
                 cls._instance.driver.implicitly_wait(10)
+                cls._instance.wait = WebDriverWait(cls._instance.driver, 10)
+                cls._instance.action = ActionChains(cls._instance.driver)
             return cls._instance
 
     @staticmethod
@@ -28,3 +33,17 @@ class WebDriverSingleton:
         if WebDriverSingleton._instance:
             WebDriverSingleton._instance.driver.quit()
             WebDriverSingleton._instance = None
+
+    @staticmethod
+    def wait_for_element(by, value, condition=EC.presence_of_element_located):
+        return WebDriverSingleton._instance.wait.until(condition((by, value)))
+
+    @staticmethod
+    def perform_action(action):
+        return action(WebDriverSingleton._instance.action_chains).perform()
+
+
+
+
+
+

@@ -18,10 +18,10 @@ class SingUpPage(BasePage):
     error = Element((By.ID, "error"))
 
     def create_user(self, user:CreateUser):
-        self.first_name_field.send(user.firstName)
-        self.last_name_field.send(user.lastName)
-        self.email_field.send(user.email)
-        self.password_field.send(user.password)
+        self.first_name_field.send_text(user.firstName)
+        self.last_name_field.send_text(user.lastName)
+        self.email_field.send_text(user.email)
+        self.password_field.send_text(user.password)
         self.submit_button.click()
 
 

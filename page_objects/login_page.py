@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from api_clients.user_client.models.requests.user import User
@@ -15,13 +17,9 @@ class LoginPage(BasePage):
 
     error = Element((By.ID, "error"))
 
-
-    def close_browser(self):
-        self.driver.quit()
-
     def login(self, user:User):
-        self.email_field.send(user.email)
-        self.password_field.send(user.password)
+        self.email_field.send_text(user.email)
+        self.password_field.send_text(user.password)
         self.submit_button.click()
 
     def click_on_sing_up_button(self):

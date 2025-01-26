@@ -12,7 +12,7 @@ class Element:
         element = self.find()
         return element.click()
 
-    def send(self, message):
+    def send_text(self, message):
         element = self.find()
         return element.send_keys(message)
 
