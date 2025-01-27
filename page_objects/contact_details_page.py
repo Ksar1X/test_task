@@ -12,11 +12,11 @@ class ContactDetailsPage(ContactListPage):
     return_to_contact_list_button = Element((By.ID, "return"))
 
     def return_to_contact_list_page(self):
-        self.return_to_contact_list_button.click()
+        self.return_to_contact_list_button.click_on_element()
 
     def go_to_edit_contact_page(self):
-        self.edit_contact_button.click()
+        self.edit_contact_button.click_on_element()
 
     def delete_contact(self):
-        self.delete_contact_button.click()
+        self.delete_contact_button.click_on_element()
         self.driver.switch_to.alert.accept()

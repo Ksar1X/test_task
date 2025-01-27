@@ -39,8 +39,8 @@ class WebDriverSingleton:
         return WebDriverSingleton._instance.wait.until(condition((by, value)))
 
     @staticmethod
-    def perform_action(action):
-        return action(WebDriverSingleton._instance.action_chains).perform()
+    def get_action_chain():
+        return WebDriverSingleton._instance.action
 
 
 

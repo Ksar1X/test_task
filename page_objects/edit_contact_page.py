@@ -17,91 +17,50 @@ class EditContactPage(ContactDetailsPage):
     street2_field = Element((By.ID, "street2"))
     city_field = Element((By.ID, "city"))
     state_field = Element((By.ID, "stateProvince"))
-    postal_code_field = Element((By.ID, "postalCode'"))
-    country_field = Element((By.ID, "country'"))
-
-    submit_button = Element((By.ID, "submit'"))
-    cancel_button = Element((By.ID, "cancel"))
+    postal_code_field = Element((By.ID, "postalCode"))
+    country_field = Element((By.ID, "country"))
 
     @staticmethod
-    def clear_field(action):
-        return action.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE)
+    def clear_and_input(field: Element, message: str):
+        field.click_on_element()
+        action = WebDriverSingleton.get_action_chain()
+        action.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        field.send_text(message)
 
-    def change_first_name_field(self, message):
-        field = self.first_name_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.first_name_field.send_text(message)
-        self.submit_button.click()
+    def update_field(self, field_name: str, message: str):
+        field = getattr(self, f"{field_name}_field", None)
+        self.clear_and_input(field, message)
+        self.click_on_submit_button()
 
-    def change_last_name_field(self, message):
-        field = self.last_name_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.last_name_field.send_text(message)
-        self.submit_button.click()
+    def change_first_name_field(self, message: str):
+        self.update_field("first_name", message)
 
-    def change_birth_date_field(self, message):
-        field = self.birthdate_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.birthdate_field.send_text(message)
-        self.submit_button.click()
+    def change_last_name_field(self, message: str):
+        self.update_field("last_name", message)
 
-    def change_email_field(self, message):
-        field = self.email_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.email_field.send_text(message)
-        self.submit_button.click()
+    def change_birth_date_field(self, message: str):
+        self.update_field("birthdate", message)
 
+    def change_email_field(self, message: str):
+        self.update_field("email", message)
 
-    def change_phone_field(self, message):
-        field = self.phone_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.phone_field.send_text(message)
-        self.submit_button.click()
+    def change_phone_field(self, message: str):
+        self.update_field("phone", message)
 
-    def change_street1_field(self, message):
-        field = self.street1_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.street1_field.send_text(message)
-        self.submit_button.click()
+    def change_street1_field(self, message: str):
+        self.update_field("street1", message)
 
-    def change_street2_field(self, message):
-        field = self.street2_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.street2_field.send_text(message)
-        self.submit_button.click()
+    def change_street2_field(self, message: str):
+        self.update_field("street2", message)
 
-    def change_city_field(self, message):
-        field = self.city_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.city_field.send_text(message)
-        self.submit_button.click()
+    def change_city_field(self, message: str):
+        self.update_field("city", message)
 
-    def change_state_province_field(self, message):
-        field = self.state_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.state_field.send_text(message)
-        self.submit_button.click()
+    def change_state_province_field(self, message: str):
+        self.update_field("state", message)
 
-    def change_postal_code_field(self, message):
-        field = self.postal_code_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.postal_code_field.send_text(message)
-        self.submit_button.click()
+    def change_postal_code_field(self, message: str):
+        self.update_field("postal_code", message)
 
-    def change_country_field(self, message):
-        field = self.country_field.find()
-        field.click()
-        WebDriverSingleton.perform_action(self.clear_field)
-        self.country_field.send_text(message)
-        self.submit_button.click()
-
+    def change_country_field(self, message: str):
+        self.update_field("country", message)

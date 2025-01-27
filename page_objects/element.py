@@ -8,13 +8,13 @@ class Element:
     def find(self):
         return WebDriverSingleton.get_driver().find_element(*self.locator)
 
-    def click(self):
+    def click_on_element(self):
         element = self.find()
-        return element.click()
+        element.click()
 
     def send_text(self, message):
         element = self.find()
-        return element.send_keys(message)
+        element.send_keys(message)
 
     def get_text(self):
         element = self.find()
