@@ -11,6 +11,7 @@ class BasePage:
     contact_url = "https://thinking-tester-contact-list.herokuapp.com/contactList"
     add_contact_url = "https://thinking-tester-contact-list.herokuapp.com/addContact"
     contact_details_url = "https://thinking-tester-contact-list.herokuapp.com/contactDetails"
+    edit_contact_url = 'https://thinking-tester-contact-list.herokuapp.com/editContact'
 
     submit_button = Element((By.ID, "submit"))
     cancel_button = Element((By.ID, "cancel"))

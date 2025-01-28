@@ -1,12 +1,14 @@
+import time
+
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
-
-from page_objects.contact_details_page import ContactDetailsPage
+from page_objects.base_page import BasePage
 from page_objects.element import Element
 from tests.singleton import WebDriverSingleton
+from selenium.webdriver.support import expected_conditions as EC
 
 
-class EditContactPage(ContactDetailsPage):
+class EditContactPage(BasePage):
 
     first_name_field = Element((By.ID, "firstName"))
     last_name_field = Element((By.ID, "lastName"))
@@ -22,9 +24,9 @@ class EditContactPage(ContactDetailsPage):
 
     @staticmethod
     def clear_and_input(field: Element, message: str):
-        field.click_on_element()
         action = WebDriverSingleton.get_action_chain()
-        action.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        field.click_on_element()
+        action.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.BACKSPACE)
         field.send_text(message)
 
     def update_field(self, field_name: str, message: str):
