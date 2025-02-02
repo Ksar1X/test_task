@@ -1,39 +1,20 @@
+from selenium.webdriver.common.by import By
+from api_clients.user_client.models.requests.create_user_model import CreateUser
 from page_objects.base_page import BasePage
+from page_objects.element import Element
 
 
 class SingUpPage(BasePage):
 
-    FIRST_NAME_FIELD = ("xpath", "//input[@id='firstName']")
-    LAST_NAME_FIELD = ("xpath", "//input[@id='lastName']")
-    EMAIL_FIELD = ("xpath", "//input[@id='email']")
-    PASSWORD_FIELD = ("xpath", "//input[@id='password']")
-    SUBMIT_BUTTON = ("xpath", "//button[@id='submit']")
-    CANCEL_BUTTON = ("xpath", "//button[@id='cancel']")
-    ERROR = ("xpath", "//span[@id='error']")
+    first_name_field = Element((By.ID, "firstName"))
+    last_name_field = Element((By.ID, "lastName"))
+    email_field = Element((By.ID, "email"))
+    password_field = Element((By.ID, "password"))
 
 
-    def open_browser(self):
-        self.driver.get(self.sing_up_url)
-
-    def click_on_submit_button(self):
-        self.driver.find_element(*self.SUBMIT_BUTTON).click()
-
-    def create_user(self, email, password, first_name, last_name):
-        self.open_browser()
-        first_name_field = self.driver.find_element(*self.FIRST_NAME_FIELD)
-        first_name_field.send_keys(first_name)
-        last_name_field = self.driver.find_element(*self.LAST_NAME_FIELD)
-        last_name_field.send_keys(last_name)
-        email_field = self.driver.find_element(*self.EMAIL_FIELD)
-        email_field.send_keys(email)
-        password_field = self.driver.find_element(*self.PASSWORD_FIELD)
-        password_field.send_keys(password)
+    def create_user(self, user:CreateUser):
+        self.first_name_field.send_text(user.firstName)
+        self.last_name_field.send_text(user.lastName)
+        self.email_field.send_text(user.email)
+        self.password_field.send_text(user.password)
         self.click_on_submit_button()
-
-    def click_on_cancel_button(self):
-        self.driver.get(self.sing_up_url)
-        self.driver.find_element(*self.CANCEL_BUTTON).click()
-
-    def error(self):
-        error = self.driver.find_element(*self.ERROR)
-        return error.text

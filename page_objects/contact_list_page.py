@@ -1,13 +1,17 @@
+from selenium.webdriver.common.by import By
+
 from page_objects.base_page import BasePage
+from page_objects.element import Element
+from tests.singleton import WebDriverSingleton
 
 
 class ContactListPage(BasePage):
 
-    ADD_CONTACT_BUTTON = ("xpath", "//button[@id='add-contact']")
-    CONTACT_ROW = ("xpath", "//td[1]")
+    add_contact_button = Element((By.ID, "add-contact"))
 
     def add_contact(self):
-        self.driver.find_element(*self.ADD_CONTACT_BUTTON).click()
+        self.add_contact_button.click_on_element()
 
-    def click_on_contact(self, email):
-        self.driver.find_element("xpath",f"//td[contains(text(),'{email}')]").click()
+    @staticmethod
+    def click_on_contact(email):
+        WebDriverSingleton.get_driver().find_element("xpath",f"//td[contains(text(),'{email}')]").click()
