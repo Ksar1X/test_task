@@ -38,9 +38,6 @@ class WebDriverSingleton:
     def wait_for_element(by, value, condition=EC.presence_of_element_located):
         return WebDriverSingleton._instance.wait.until(condition((by, value)))
 
-    @staticmethod
-    def get_action_chain():
-        return WebDriverSingleton._instance.action
 
 
 

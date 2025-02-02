@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from page_objects.base_page import BasePage
 from page_objects.element import Element
-from tests.singleton import WebDriverSingleton
+from tests.webdriver_singleton import WebDriverSingleton
 
 
 class ContactDetailsPage(BasePage):
