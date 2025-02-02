@@ -1,31 +1,10 @@
-from _pytest.fixtures import fixture
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from api_clients.user_client.models.requests.user import User
 from tests.webdriver_singleton import WebDriverSingleton
 from tests.test_base_ui import TestBaseUi
 
 
 class TestUIContactListPage(TestBaseUi):
-
-    @fixture(scope="function", autouse=True)
-    def open_and_close_browser_fixture(self):
-        WebDriverSingleton.get_driver()
-        WebDriverSingleton.get_driver().get(self.base_page.base_url)
-        yield
-        WebDriverSingleton.quit_driver()
-
-    @fixture
-    def login_user_and_create_contact_fixture(self):
-        user = self.random_user.generate()
-        self.user_client.add_user(user=user)
-        user = User(email=user.email, password=user.password)
-        self.login_page.login(user)
-        response = self.user_client.login_user(user)
-        contact = self.random_contact.generate()
-        self.contact_client.add_contact(data=contact, token=response.json().get('token'))
-        yield contact
-        self.user_client.delete_user(token=response.json().get('token'))
 
     @staticmethod
     def refresh_browser():
