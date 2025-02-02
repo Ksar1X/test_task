@@ -1,18 +1,8 @@
-from _pytest.fixtures import fixture
 from api_clients.user_client.models.requests.user import User
-from tests.singleton import WebDriverSingleton
 from tests.test_base_ui import TestBaseUi
 
 
 class TestUILoginPage(TestBaseUi):
-
-    @fixture(scope="function", autouse=True)
-    def open_and_close_browser_fixture(self):
-        WebDriverSingleton.get_driver()
-        WebDriverSingleton.get_driver().get(self.base_page.base_url)
-        yield
-        WebDriverSingleton.quit_driver()
-
 
     def test_user_cannot_login_with_empty_fields(self):
         self.login_page.login(User(email="", password=""))
