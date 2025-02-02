@@ -1,6 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 from page_objects.element import Element
-from tests.singleton import WebDriverSingleton
+from tests.webdriver_singleton import WebDriverSingleton
 from selenium.webdriver.common.by import By
 
 

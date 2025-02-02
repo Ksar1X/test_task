@@ -1,4 +1,4 @@
-from tests.singleton import WebDriverSingleton
+from tests.webdriver_singleton import WebDriverSingleton
 
 
 class Element:

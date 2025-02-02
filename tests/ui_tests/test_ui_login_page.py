@@ -1,6 +1,6 @@
 from _pytest.fixtures import fixture
 from api_clients.user_client.models.requests.user import User
-from tests.singleton import WebDriverSingleton
+from tests.webdriver_singleton import WebDriverSingleton
 from tests.test_base_ui import TestBaseUi
 
 
